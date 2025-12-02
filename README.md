@@ -57,6 +57,29 @@ cd assignment1
 python main.py
 ```
 
+#### Sample Output
+
+The following execution log demonstrates the concurrent behavior of the Producer and Consumer threads. Note that the order of log messages may vary between runs due to concurrency. However, the data is always processed correctly.
+
+```text
+Thread-1 - Producing: 1
+Thread-1 - Producing: 2
+Thread-1 - Producing: 3
+Thread-2 - Consumed: 1
+Thread-1 - Producing: 4
+Thread-2 - Consumed: 2
+Thread-1 - Producing: 5
+Thread-2 - Consumed: 3
+Thread-2 - Consumed: 4
+Thread-2 - Consumed: 5
+Thread-2 - Consumer received SENTINEL.
+Thread-1 - Producer done, SENTINEL sent.
+
+Final Results:
+Source data:      [1, 2, 3, 4, 5]
+Destination data: [1, 2, 3, 4, 5]
+```
+
 ### Run tests
 
 ```bash
@@ -81,28 +104,20 @@ The dataset is simple but expressive, suitable for demonstrating grouping, filte
 
 ### Approach
 
-Two programming paradigms were implemented:
+The solution implements two programming paradigms:
 
-### 1. Imperative Version
+1.  **Imperative Version:** Utilizes standard control flow like loops and data structures like dictionaries for efficient, stateful processing.
+2.  **Functional / Stream Version:** Employs functional programming concepts (`map`, `filter`, `reduce`, `groupby`) to build data processing pipelines.
 
-- Uses loops and dictionaries  
-- Straightforward and commonly used in real-world Python code
+### Key Analytics Implemented
 
-### 2. Functional / Stream Version
+The application processes the dataset to generate the following business insights:
 
-- Uses `map`, `filter`, `reduce`, and `itertools.groupby`  
-- Demonstrates a stream-style pipeline  
-- Matches the assignment’s functional programming requirement  
-
-Both approaches generate the same analytical results.
-
-### Implemented analytics
-
-- Total sales  
-- Average unit price  
-- Sales grouped by region  
-- Top N products by revenue  
-- High value sales above a threshold  
+- Total Sales
+- Average Unit Price
+- Sales by Region
+- Top N Products
+- High Value Sales
 
 ### Run Assignment 2
 
@@ -110,7 +125,24 @@ Both approaches generate the same analytical results.
 cd assignment2
 python main.py
 ```
+#### Sample Output
 
+Running the analysis script produces the following insights.
+
+```text
+Loaded rows: 1500
+
+=== Imperative ===
+Total sales: 4379992.4285
+Average unit price: 298.82694666666663
+Sales by region: {'East': 883633.7180000012, 'South': 827768.1869999999, 'North': 967957.9800000007, 'Central': 847153.6845000003, 'West': 853478.8590000002}
+Top 3 products by revenue: ['Tablet', 'Laptop', 'Printer']
+
+=== Functional ===
+Total sales (FP): 4379992.4284999985
+Sales by region (FP): {'Central': 847153.6845, 'East': 883633.718, 'North': 967957.98, 'South': 827768.187, 'West': 853478.8589999999}
+High value sales (>1000) grouped by region: {'Central': 804463.632, 'East': 837699.7375, 'North': 930947.592, 'South': 794149.2705, 'West': 822057.5}
+```
 ### Run tests
 
 ```bash
