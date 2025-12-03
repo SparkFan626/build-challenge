@@ -3,12 +3,9 @@
 import unittest
 from analysis import (
     total_sales, total_sales_fp,
-    average_unit_price,
     sales_by_region, sales_by_region_fp,
-    top_n_products_by_sales,
-    high_value_sales_fp
+    high_value_sales, high_value_sales_fp
 )
-
 
 class TestSalesAnalysis(unittest.TestCase):
 
@@ -19,33 +16,33 @@ class TestSalesAnalysis(unittest.TestCase):
             {"Region": "West", "Product": "Laptop", "UnitPrice": 150, "TotalPrice": 1500},
         ]
 
-    # Basic versions
-    def test_total_sales(self):
+    # Pair 1: Total Sales
+    def test_total_sales_imperative(self):
         self.assertEqual(total_sales(self.data), 4500)
 
-    def test_average_unit_price(self):
-        self.assertEqual(average_unit_price(self.data), (100 + 200 + 150) / 3)
+    def test_total_sales_fp(self):
+        self.assertEqual(total_sales_fp(self.data), 4500)
 
-    def test_sales_by_region(self):
+    # Pair 2: Sales by Region
+    def test_sales_by_region_imperative(self):
         result = sales_by_region(self.data)
         self.assertEqual(result["East"], 3000)
         self.assertEqual(result["West"], 1500)
-
-    def test_top_products(self):
-        result = top_n_products_by_sales(self.data, 1)
-        self.assertEqual(result, ["Laptop"])
-
-    # FP versions 
-    def test_total_sales_fp(self):
-        self.assertEqual(total_sales_fp(self.data), 4500)
 
     def test_sales_by_region_fp(self):
         result = sales_by_region_fp(self.data)
         self.assertEqual(result["East"], 3000)
         self.assertEqual(result["West"], 1500)
 
+    # Pair 3: High Value Sales (> 1000)
+    def test_high_value_sales_imperative(self):
+        # Should exclude the item with exactly 1000
+        result = high_value_sales(self.data, threshold=1000)
+        self.assertEqual(result["East"], 2000)
+        self.assertEqual(result["West"], 1500)
+
     def test_high_value_sales_fp(self):
-        result = high_value_sales_fp(self.data, threshold=1200)
+        result = high_value_sales_fp(self.data, threshold=1000)
         self.assertEqual(result["East"], 2000)
         self.assertEqual(result["West"], 1500)
 

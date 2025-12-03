@@ -32,35 +32,29 @@ def total_sales(data: List[Dict[str, Any]]) -> float:
     """
     Sum of TotalPrice across all rows.
     """
-    return sum(row["TotalPrice"] for row in data)
-
-def average_unit_price(data: List[Dict[str, Any]]) -> float:
-    """
-    Average UnitPrice.
-    """
-    if not data:
-        return 0.0
-    return sum(row["UnitPrice"] for row in data) / len(data)
+    total = 0.0
+    for row in data:
+        total += row["TotalPrice"]
+    return total
 
 def sales_by_region(data: List[Dict[str, Any]]) -> Dict[str, float]:
     """
-    Group by region.
+    Group by region and sum sales.
     """
     result = defaultdict(float)
     for row in data:
         result[row["Region"]] += row["TotalPrice"]
     return dict(result)
 
-def top_n_products_by_sales(data: List[Dict[str, Any]], n: int) -> List[str]:
+def high_value_sales(data: List[Dict[str, Any]], threshold: float) -> Dict[str, float]:
     """
-    Top N products ranked by total sales.
+    Filter sales > threshold, then group by region.
     """
-    totals = defaultdict(float)
+    result = defaultdict(float)
     for row in data:
-        totals[row["Product"]] += row["TotalPrice"]
-
-    sorted_products = sorted(totals.items(), key=lambda x: x[1], reverse=True)
-    return [p for p, _ in sorted_products[:n]]
+        if row["TotalPrice"] > threshold:
+            result[row["Region"]] += row["TotalPrice"]
+    return dict(result)
 
 
 # Functional / Stream Version

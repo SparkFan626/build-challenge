@@ -3,11 +3,12 @@
 import csv
 from analysis import (
     load_data,
+    # Pair 1: Aggregation
     total_sales, total_sales_fp,
-    average_unit_price,
+    # Pair 2: Grouping
     sales_by_region, sales_by_region_fp,
-    top_n_products_by_sales,
-    high_value_sales_fp,
+    # Pair 3: Filtering + Grouping
+    high_value_sales, high_value_sales_fp
 )
 
 
@@ -21,21 +22,22 @@ def main():
     print("Loaded rows:", len(data))
 
 
-    # Imperative
-    print("\n=== Imperative ===")
+    # Imperative 
+    print("\n=== Imperative Version===")
     print("Total sales:", total_sales(data))
-    print("Average unit price:", average_unit_price(data))
-    print("Sales by region:", sales_by_region(data))
-    print("Top 3 products by revenue:", top_n_products_by_sales(data, 3))
+    print("Sales by Region:", sales_by_region(data))
+    
+    high_value = high_value_sales(data, threshold=1000)
+    print("High value sales (>1000) grouped by region:", high_value)
 
 
     # Functional / Stream (FP)
-    print("\n=== Functional ===")
-    print("Total sales (FP):", total_sales_fp(data))
-    print("Sales by region (FP):", sales_by_region_fp(data))
+    print("\n=== Functional Version===")
+    print("Total sales:", total_sales_fp(data))
+    print("Sales by region:", sales_by_region_fp(data))
 
-    high_value = high_value_sales_fp(data, threshold=1000)
-    print("High value sales (>1000) grouped by region:", high_value)
+    high_value_fp = high_value_sales_fp(data, threshold=1000)
+    print("High value sales (>1000) grouped by region:", high_value_fp)
 
 
 if __name__ == "__main__":

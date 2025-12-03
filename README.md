@@ -104,20 +104,19 @@ The dataset is simple but expressive, suitable for demonstrating grouping, filte
 
 ### Approach
 
-The solution implements two programming paradigms:
+The solution implements two programming paradigms to demonstrate different data processing techniques:
 
-1.  **Imperative Version:** Utilizes standard control flow like loops and data structures like dictionaries for efficient, stateful processing.
-2.  **Functional / Stream Version:** Employs functional programming concepts (`map`, `filter`, `reduce`, `groupby`) to build data processing pipelines.
+1.  **Imperative Version:** Utilizes for-loop, if-else, and dictionaries for efficient processing.
+2.  **Functional / Stream Version:** Employs functional programming concepts (`map`, `filter`, `reduce`, `groupby`) to build data pipelines.
+
 
 ### Key Analytics Implemented
 
-The application processes the dataset to generate the following business insights:
+The application processes the dataset to generate the following business insights, implemented in **both** paradigms for comparison:
 
-- Total Sales
-- Average Unit Price
-- Sales by Region
-- Top N Products
-- High Value Sales
+- **Total Sales Aggregation:** Calculating the overall revenue.
+- **Regional Performance:** Grouping and summarizing sales figures by region.
+- **High-Value Filtering:** Extracting and aggregating transactions exceeding a specific value threshold (> 1000).
 
 ### Run Assignment 2
 
@@ -132,15 +131,14 @@ Running the analysis script produces the following insights.
 ```text
 Loaded rows: 1500
 
-=== Imperative ===
-Total sales: 4379992.4285
-Average unit price: 298.82694666666663
-Sales by region: {'East': 883633.7180000012, 'South': 827768.1869999999, 'North': 967957.9800000007, 'Central': 847153.6845000003, 'West': 853478.8590000002}
-Top 3 products by revenue: ['Tablet', 'Laptop', 'Printer']
+=== Imperative Version===
+Total sales: 4379992.4284999985
+Sales by Region: {'East': 883633.7180000012, 'South': 827768.1869999999, 'North': 967957.9800000007, 'Central': 847153.6845000003, 'West': 853478.8590000002}
+High value sales (>1000) grouped by region: {'East': 837699.7375000006, 'North': 930947.5920000005, 'Central': 804463.6320000004, 'South': 794149.2704999999, 'West': 822057.5000000002}
 
-=== Functional ===
-Total sales (FP): 4379992.4284999985
-Sales by region (FP): {'Central': 847153.6845, 'East': 883633.718, 'North': 967957.98, 'South': 827768.187, 'West': 853478.8589999999}
+=== Functional Version===
+Total sales: 4379992.4284999985
+Sales by region: {'Central': 847153.6845, 'East': 883633.718, 'North': 967957.98, 'South': 827768.187, 'West': 853478.8589999999}
 High value sales (>1000) grouped by region: {'Central': 804463.632, 'East': 837699.7375, 'North': 930947.592, 'South': 794149.2705, 'West': 822057.5}
 ```
 ### Run tests
